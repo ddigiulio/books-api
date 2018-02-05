@@ -17,6 +17,11 @@ const { PORT, DATABASE_URL } = require('./config');
 const app = express();
 
 // Logging
+app.use(
+  cors({
+      origin: 'https://thebooknook.netlify.com'
+  })
+);
 app.use(morgan('common'));
 //comment
 // CORS
@@ -29,11 +34,7 @@ app.use(morgan('common'));
 //   }
 //   next();
 // });
-app.use(
-  cors({
-      origin: 'https://thebooknook.netlify.com'
-  })
-);
+
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
