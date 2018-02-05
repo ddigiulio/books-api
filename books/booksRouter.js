@@ -28,7 +28,7 @@ const loadUser = function (req, res, next) {
 }
 
 router.get("/hi", function( req, res) {
-    res.send("Hi");
+    res.json("Hi");
 })
 //endpoint to update the currentlyReading book
 router.get("/currentlyReading", jwtAuth, loadUser, function (req, res) {
