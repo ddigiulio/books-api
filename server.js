@@ -30,7 +30,9 @@ app.use(function (req, res, next) {
   next();
 });
 app.use(
-  cors()
+  cors({
+      origin: 'https://thebooknook.netlify.com'
+  })
 );
 
 passport.use(localStrategy);
