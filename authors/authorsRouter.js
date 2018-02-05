@@ -47,7 +47,7 @@ router.get("/authorInfo/:id", jwtAuth, loadUser, function (req, res) {
         })
 })
 
-router.post("/:name", jwtAuth, loadUser, function (request, response) {
+router.post("/authorname/:name", jwtAuth, loadUser, function (request, response) {
     let user = request.user
     var url = "https://www.goodreads.com/api/author_url/"
     var id = request.params.name
