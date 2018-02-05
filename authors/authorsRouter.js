@@ -27,6 +27,9 @@ const loadUser = function (req, res, next) {
     }
 }
 
+router.get("/hi", function(req, res){
+    res.json("Hi")
+})
 router.get("/topAuthors", 
     jwtAuth, 
     loadUser, 
