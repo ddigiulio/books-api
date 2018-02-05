@@ -108,7 +108,7 @@ router.post("/topAuthorAdd/:authorID", jwtAuth, loadUser, function (request, res
 
             parseString(data.data, function (err, result) {
                 const param = result.GoodreadsResponse.author[0].$.id
-                const url = "http://localhost:8080/authors/searchAuthor/" + param
+                const url = "https://sleepy-bayou-48369.herokuapp.com/authors/searchAuthor/" + param
                 let searchResult = [];
                 let author= {};
                 axios.get(url)
