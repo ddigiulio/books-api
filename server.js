@@ -18,9 +18,7 @@ const app = express();
 
 // Logging
 app.use(
-  cors({
-      origin: 'https://thebooknook.netlify.com'
-  })
+  cors()
 );
 app.use(morgan('common'));
 //comment
