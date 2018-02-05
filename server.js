@@ -29,11 +29,9 @@ app.use(function (req, res, next) {
   }
   next();
 });
-// app.use(
-//   cors({
-//       origin: CLIENT_ORIGIN
-//   })
-// );
+app.use(
+  cors()
+);
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
