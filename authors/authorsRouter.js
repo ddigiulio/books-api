@@ -63,6 +63,7 @@ router.post("/authorname/:name", jwtAuth, loadUser, function (request, response)
             parseString(data.data, function (err, result) {
                 const param = result.GoodreadsResponse.author[0].$.id
                 const url = "https://sleepy-bayou-48369.herokuapp.com/authors/searchAuthor/" + param
+                // const url = "http://localhost:8080/authors/searchAuthor/" + param
                 let searchResult = [];
                 let author= {};
                 axios.get(url)
@@ -109,27 +110,32 @@ router.post("/topAuthorAdd/:authorID", jwtAuth, loadUser, function (request, res
             parseString(data.data, function (err, result) {
                 const param = result.GoodreadsResponse.author[0].$.id
                 const url = "https://sleepy-bayou-48369.herokuapp.com/authors/searchAuthor/" + param
+                // const url = "http://localhost:8080/authors/searchAuthor/" + param
                 let searchResult = [];
                 let author= {};
                 axios.get(url)
                     .then(result => {
                         const parsed = result.data.GoodreadsResponse.author[0]
                         
+                        let description= parsed.about[0]
+                        description = description.replace(/<.*?>/g,"")
+                        let about = description;
+                       
                         authors.create({
                             name: parsed.name[0],
-                            about: parsed.about[0],
+                            about: about,
                             imageSrc: parsed.image_url[0],
                             smallImageSrc: parsed.small_image_url[0],
                             born: parsed.born_at[0],
                             died: parsed.died_at[0],
                             hometown: parsed.hometown[0],
-                            // books: parsed.books[0].book
+                          
                         })
                             .then(author => {
                                 user.topAuthors.push(author)
                                 user.save()
                                     .then(() => {
-                                        // console.log(user.topAuthors)
+                                       
                                         response.send(user.topAuthors)
                                     })
                             })

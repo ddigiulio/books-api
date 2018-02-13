@@ -147,11 +147,11 @@ router.get('/', (req, res) => {
 });
 
 router.get('/search/:id', jwtAuth, (req, res) => {
-  console.log(req.params.id)
+
   return User.findOne({"username": req.params.id})
     .then(user => 
       {
-        console.log(user)
+        
         res.json(user)})
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });

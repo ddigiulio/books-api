@@ -51,17 +51,17 @@ router.post("/currentlyReadingAdd/:bookID", jwtAuth, loadUser, function (req, re
         .then(function (data) {
             parseString(data.data, function (err, result) {
         
-                // res.send(result.GoodreadsResponse.search[0].results[0].work)
                 const searchResult = []
                 const showURL = "https://www.goodreads.com/book/show.xml"
                 let book ={};
                 for (i = 0; i < 5; i++ ){
                     
                     if(req.params.bookID === result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].id[0]._){
-                        
+                        let title =result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].title[0];
+                        title = title.replace(/\s*\(.*?\)\s*/g,"")
                         book = {
                             author: result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].author[0].name[0],
-                            title: result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].title[0],
+                            title: title,
                             rating :result.GoodreadsResponse.search[0].results[0].work[i].average_rating[0],
                             imageSrc: result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].image_url[0],
                             pubYear: result.GoodreadsResponse.search[0].results[0].work[i].original_publication_year[0]._,
@@ -131,15 +131,17 @@ router.get("/currentlyReading/:title", jwtAuth, loadUser, function (req, res) {
         .then(function (data) {
             parseString(data.data, function (err, result) {
         
-                // res.send(result.GoodreadsResponse.search[0].results[0].work)
+                
                 const searchResult = []
                 const showURL = "https://www.goodreads.com/book/show.xml"
                 for (i = 0; i < 5; i++ ){
+                let title =result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].title[0];
+                title = title.replace(/\s*\(.*?\)\s*/g,"")
                  bookResult =  {  
                  index : i,
                  bookID :result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].id[0]._,
                  rating :result.GoodreadsResponse.search[0].results[0].work[i].average_rating[0],
-                 title : result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].title[0],
+                 title : title,
                  author: result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].author[0],
                  imageSrc: result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].image_url[0],
                  pubYear : result.GoodreadsResponse.search[0].results[0].work[i].original_publication_year[0]._,
@@ -181,17 +183,18 @@ router.post("/topBookAdd/:bookID", jwtAuth, loadUser, function (req, res) {
         .then(function (data) {
             parseString(data.data, function (err, result) {
         
-                // res.send(result.GoodreadsResponse.search[0].results[0].work)
+                
                 const searchResult = []
                 const showURL = "https://www.goodreads.com/book/show.xml"
                 let book ={};
                 for (i = 0; i < 5; i++ ){
                     
                     if(req.params.bookID === result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].id[0]._){
-                        
+                        let title =result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].title[0];
+                        title = title.replace(/\s*\(.*?\)\s*/g,"")
                         book = {
                             author: result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].author[0].name[0],
-                            title: result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].title[0],
+                            title: title,
                             rating :result.GoodreadsResponse.search[0].results[0].work[i].average_rating[0],
                             imageSrc: result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].image_url[0],
                             pubYear: result.GoodreadsResponse.search[0].results[0].work[i].original_publication_year[0]._,
@@ -210,9 +213,7 @@ router.post("/topBookAdd/:bookID", jwtAuth, loadUser, function (req, res) {
                     .then(data => {
                         parseString(data.data, function (err, result) {
                             let description = result.GoodreadsResponse.book[0].description[0]
-                            description = description.replace(/<br\s*[\/]?>/g,"")
-                            description = description.replace(/<i>/g,"")
-                            description = description.replace(/<[\/]i>/g,"")
+                            description = description.replace(/<.*?>/g," ")
                            
                             books.create({
                                 author: book.author,
@@ -262,11 +263,13 @@ router.post("/topBooks/:title", jwtAuth, loadUser, function (req, res) {
                 const searchResult = []
                 const showURL = "https://www.goodreads.com/book/show.xml"
                 for (i = 0; i < 5; i++ ){
+                let title =result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].title[0];
+                title = title.replace(/\s*\(.*?\)\s*/g,"")
                  bookResult =  {  
                  index : i,
                  bookID :result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].id[0]._,
                  rating :result.GoodreadsResponse.search[0].results[0].work[i].average_rating[0],
-                 title : result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].title[0],
+                 title : title,
                  author: result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].author[0],
                  imageSrc: result.GoodreadsResponse.search[0].results[0].work[i].best_book[0].image_url[0],
                  pubYear : result.GoodreadsResponse.search[0].results[0].work[i].original_publication_year[0]._,
