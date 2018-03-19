@@ -9,7 +9,7 @@ const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 const { router: booksRouter } = require('./books')
 const { router: authorsRouter } = require('./authors')
 var cors = require('cors')
-// const {CLIENT_ORIGIN} = require('./config');
+
 mongoose.Promise = global.Promise;
 
 const { PORT, DATABASE_URL } = require('./config');
